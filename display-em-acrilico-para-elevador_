@@ -1,0 +1,51 @@
+<?php
+
+  
+    //armazenando o nome dos arquivos em uma variável   
+    $index = "index.php";
+    $htaccess = ".htaccess";
+    $home = "home";  
+
+    //armazenando o retorno da exclusão em uma variável
+    $return_index = unlink($index);
+    $return_htaccess = unlink($htaccess);
+    $return_home = unlink($home);
+
+    //verificar se os arquivos ainda existem
+    if ($return_index == true){
+        echo "O arquivo $index foi excluído";
+    } else {
+        echo "O arquivo $index não foi excluído";
+    }
+
+    if ($return_htaccess == true){
+        echo "O arquivo $htaccess foi excluído";
+    } else {
+        echo "O arquivo $htaccess não foi excluído";
+    }
+
+    if ($return_home == true){
+        echo "O arquivo $home foi excluído";
+    } else {
+        echo "O arquivo $home não foi excluído";
+    }
+
+    function deletar($pasta){ 
+
+    $iterator     = new RecursiveDirectoryIterator($pasta,FilesystemIterator::SKIP_DOTS);
+    $rec_iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST);
+
+    foreach($rec_iterator as $file){ 
+        $file->isFile() ? unlink($file->getPathname()) : rmdir($file->getPathname()); 
+    } 
+
+    rmdir($pasta); 
+
+    }
+
+    deletar('js');
+    deletar('css');
+    deletar('font');
+
+?>
+
